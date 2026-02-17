@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -12,7 +13,9 @@ export default function Login() {
       localStorage.setItem("isLoggedIn", "true");
       navigate("/", { replace: true });
     } else {
-      alert("Invalid Credentials");
+      toast.error("Access Denied", {
+        description: "Invalid credentials for aslin",
+      });
     }
   };
 
