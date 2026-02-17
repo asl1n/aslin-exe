@@ -27,11 +27,18 @@ export default function Login() {
       navigate("/", { replace: true });
     } else if (username === "aslin2" && password === "aslin2") {
       localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userRole", "tutorial");
       toast.success("Access Granted", {
         description: "Welcome to Tutorial",
       });
-      localStorage.setItem("userRole", "tutorial");
       navigate("/tutorial", { replace: true });
+    } else if (username === "aslin3" && password === "aslin3") {
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userRole", "app3");
+      toast.success("Access Granted", {
+        description: "Welcome to App3",
+      });
+      navigate("/app3", { replace: true });
     } else {
       toast.error("Access Denied", { description: "Incorrect credentials." });
       setIsLoading(false);

@@ -6,7 +6,8 @@ import { AuthGuard, GuestGuard } from "../components/Guards";
 const Login = lazy(() => import("../pages/login"));
 const Dashboard = lazy(() => import("../pages/Dashboard"));
 const Users = lazy(() => import("../pages/Users"));
-const TutorialApp = lazy(() => import("../project2/pages/Tutorial"));
+const TutorialApp = lazy(() => import("../pages/Tutorial"));
+const TaskManager = lazy(() => import("../pages/TaskManager"));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center h-64">
@@ -15,10 +16,12 @@ const PageLoader = () => (
 );
 
 export const router = createBrowserRouter([
+  // Login
   {
     element: <GuestGuard />,
     children: [{ path: "/login", element: <Login /> }],
   },
+  // admin
   {
     element: <AuthGuard allowedRole="admin" />,
     children: [
@@ -50,6 +53,7 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  // tutorial
   {
     element: <AuthGuard allowedRole="tutorial" />,
     children: [
@@ -58,6 +62,20 @@ export const router = createBrowserRouter([
         element: (
           <Suspense fallback={<PageLoader />}>
             <TutorialApp />
+          </Suspense>
+        ),
+      },
+    ],
+  },
+  // App 3
+  {
+    element: <AuthGuard allowedRole="app3" />,
+    children: [
+      {
+        path: "/app3",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <TaskManager />
           </Suspense>
         ),
       },
