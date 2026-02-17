@@ -72,7 +72,7 @@ export default function TaskManager() {
         <Modal
           isOpen={isLogoutModalOpen}
           title="Log Out?"
-          message="Are you sure you want to end your session? Your AccSwift tasks will be waiting for you when you return."
+          message="Are you sure you want to end your session?"
           onConfirm={handleLogout}
           onClose={() => setIsLogoutModalOpen(false)}
           confirmText="Logout"

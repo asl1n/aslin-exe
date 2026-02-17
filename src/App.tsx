@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ReactElement } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import { toast } from "sonner";
+import Modal from "./components/Modal";
 
 function App(): ReactElement {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,6 +18,8 @@ function App(): ReactElement {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
@@ -76,7 +79,7 @@ function App(): ReactElement {
               <hr className="my-1 border-slate-50" />
 
               <button
-                onClick={handleLogout}
+                onClick={() => setIsLogoutModalOpen(true)}
                 className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors text-left cursor-pointer font-medium"
               >
                 <LogOut size={16} /> Logout
@@ -84,6 +87,16 @@ function App(): ReactElement {
             </div>
           )}
         </div>
+
+        <Modal
+          isOpen={isLogoutModalOpen}
+          title="Log Out?"
+          message="Are you sure you want to end your session?"
+          onConfirm={handleLogout}
+          onClose={() => setIsLogoutModalOpen(false)}
+          confirmText="Logout"
+          isDestructive={true}
+        />
 
         <main className="p-8">
           {/* The Router Outlet */}
