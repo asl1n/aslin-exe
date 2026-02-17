@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createHashRouter, Navigate } from "react-router-dom";
 import App from "../App";
 import { AuthGuard, GuestGuard } from "../components/Guards";
 
@@ -15,7 +15,7 @@ const PageLoader = () => (
   </div>
 );
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   // Login
   {
     element: <GuestGuard />,
