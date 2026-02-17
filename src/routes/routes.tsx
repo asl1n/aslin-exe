@@ -6,6 +6,7 @@ import { AuthGuard, GuestGuard } from "../components/Guards";
 const Login = lazy(() => import("../pages/login"));
 const Dashboard = lazy(() => import("../pages/Dashboard"));
 const Users = lazy(() => import("../pages/Users"));
+const TutorialApp = lazy(() => import("../project2/pages/Tutorial"));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center h-64">
@@ -19,7 +20,7 @@ export const router = createBrowserRouter([
     children: [{ path: "/login", element: <Login /> }],
   },
   {
-    element: <AuthGuard />,
+    element: <AuthGuard allowedRole="admin" />,
     children: [
       {
         path: "/",
@@ -46,6 +47,19 @@ export const router = createBrowserRouter([
             element: <Navigate to="/" replace />,
           },
         ],
+      },
+    ],
+  },
+  {
+    element: <AuthGuard allowedRole="tutorial" />,
+    children: [
+      {
+        path: "/tutorial",
+        element: (
+          <Suspense fallback={<PageLoader />}>
+            <TutorialApp />
+          </Suspense>
+        ),
       },
     ],
   },

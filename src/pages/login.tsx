@@ -20,10 +20,18 @@ export default function Login() {
 
     if (username === "aslin" && password === "aslin") {
       localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userRole", "admin");
       toast.success("Access Granted", {
         description: "Welcome to AK-ReactApp",
       });
       navigate("/", { replace: true });
+    } else if (username === "aslin2" && password === "aslin2") {
+      localStorage.setItem("isLoggedIn", "true");
+      toast.success("Access Granted", {
+        description: "Welcome to Tutorial",
+      });
+      localStorage.setItem("userRole", "tutorial");
+      navigate("/tutorial", { replace: true });
     } else {
       toast.error("Access Denied", { description: "Incorrect credentials." });
       setIsLoading(false);
