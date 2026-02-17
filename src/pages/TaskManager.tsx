@@ -5,9 +5,13 @@ import { TaskProvider } from "../context/TaskContext";
 import TaskForm from "../components/TaskForm";
 import TaskList from "../components/TaskList";
 import TaskStats from "../components/TaskStats";
+import { useState } from "react";
+import Modal from "../components/Modal";
 
 export default function TaskManager() {
   const navigate = useNavigate();
+
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
@@ -33,7 +37,7 @@ export default function TaskManager() {
             </div>
 
             <button
-              onClick={handleLogout}
+              onClick={() => setIsLogoutModalOpen(true)}
               className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-red-600 transition-colors cursor-pointer px-3 py-2 rounded-xl hover:bg-red-50"
             >
               <LogOut size={18} />
@@ -64,6 +68,16 @@ export default function TaskManager() {
             </section>
           </div>
         </div>
+
+        <Modal
+          isOpen={isLogoutModalOpen}
+          title="Log Out?"
+          message="Are you sure you want to end your session? Your AccSwift tasks will be waiting for you when you return."
+          onConfirm={handleLogout}
+          onClose={() => setIsLogoutModalOpen(false)}
+          confirmText="Logout"
+          isDestructive={true}
+        />
       </div>
     </TaskProvider>
   );

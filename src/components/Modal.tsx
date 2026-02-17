@@ -29,7 +29,7 @@ export default function Modal({
             <h3 className="text-xl font-bold text-slate-900">{title}</h3>
             <button
               onClick={onClose}
-              className="text-slate-400 hover:text-slate-600"
+              className="text-slate-400 hover:text-slate-600 cursor-pointer"
             >
               <X size={20} />
             </button>
@@ -39,7 +39,7 @@ export default function Modal({
         <div className="flex gap-3 p-4 bg-slate-50 border-t border-slate-100">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-2 rounded-xl font-bold text-slate-600 hover:bg-slate-200 transition-colors"
+            className="flex-1 px-4 py-2 rounded-xl font-bold text-slate-600 cursor-pointer hover:bg-slate-200 transition-colors"
           >
             Cancel
           </button>
