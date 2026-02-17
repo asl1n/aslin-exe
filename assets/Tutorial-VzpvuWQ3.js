@@ -1,1 +1,0 @@
-import{u as s,j as e,t as a}from"./index-WbSgZt6F.js";function u(){const o=s(),t=()=>{localStorage.removeItem("isLoggedIn"),localStorage.removeItem("userRole"),a.success("Logout Successful!"),o("/login",{replace:!0})};return e.jsx("div",{children:e.jsx("button",{onClick:t,children:"LogOut"})})}export{u as default};
