@@ -22,12 +22,12 @@ export const TaskContext = createContext<TaskContextType | undefined>(
 
 export function TaskProvider({ children }: { children: ReactNode }) {
   const [tasks, setTasks] = useState<Task[]>(() => {
-    const saved = localStorage.getItem("accswift_tasks");
+    const saved = localStorage.getItem("Aslin_tasks");
     return saved ? JSON.parse(saved) : [];
   });
 
   useEffect(() => {
-    localStorage.setItem("accswift_tasks", JSON.stringify(tasks));
+    localStorage.setItem("Aslin_tasks", JSON.stringify(tasks));
   }, [tasks]);
 
   const addTask = (task: Task) => setTasks([task, ...tasks]);
