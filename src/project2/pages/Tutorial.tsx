@@ -1,3 +1,17 @@
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+
 export default function Tutorial() {
-  return <div>Hi</div>;
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userRole");
+    toast.success("Logout Successful!");
+    navigate("/login", { replace: true });
+  };
+  return (
+    <div>
+      <button onClick={handleLogout}>LogOut</button>
+    </div>
+  );
 }

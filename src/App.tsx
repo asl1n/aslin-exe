@@ -20,6 +20,7 @@ function App(): ReactElement {
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userRole");
     toast.success("Logout Successful!");
     navigate("/login", { replace: true });
   };
