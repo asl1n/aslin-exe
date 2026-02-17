@@ -21,7 +21,7 @@ export default function Login() {
     if (username === "aslin" && password === "aslin") {
       localStorage.setItem("isLoggedIn", "true");
       toast.success("Access Granted", {
-        description: "Welcome to AccSwift v20",
+        description: "Welcome to AK-ReactApp",
       });
       navigate("/", { replace: true });
     } else {
