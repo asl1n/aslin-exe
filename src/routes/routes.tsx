@@ -1,0 +1,52 @@
+import { lazy, Suspense } from "react";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import App from "../App";
+import { AuthGuard, GuestGuard } from "../components/Guards";
+
+const Login = lazy(() => import("../pages/login"));
+const Dashboard = lazy(() => import("../pages/Dashboard"));
+const Users = lazy(() => import("../pages/Users"));
+
+const PageLoader = () => (
+  <div className="flex items-center justify-center h-64">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+  </div>
+);
+
+export const router = createBrowserRouter([
+  {
+    element: <GuestGuard />,
+    children: [{ path: "/login", element: <Login /> }],
+  },
+  {
+    element: <AuthGuard />,
+    children: [
+      {
+        path: "/",
+        element: <App />,
+        children: [
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <Dashboard />
+              </Suspense>
+            ),
+          },
+          {
+            path: "users",
+            element: (
+              <Suspense fallback={<PageLoader />}>
+                <Users />
+              </Suspense>
+            ),
+          },
+          {
+            path: "*",
+            element: <Navigate to="/" replace />,
+          },
+        ],
+      },
+    ],
+  },
+]);
