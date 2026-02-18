@@ -10,6 +10,34 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  // For Creds display and use
+  const appCreds = [
+    {
+      name: "Admin Panel",
+      user: "aslin",
+      pass: "aslin",
+      role: "admin",
+      path: "/",
+      welcome: "Welcome to AK-ReactApp",
+    },
+    {
+      name: "Tutorial App (Coming Soon)",
+      user: "aslin2",
+      pass: "aslin2",
+      role: "tutorial",
+      path: "/tutorial",
+      welcome: "Welcome to Tutorial",
+    },
+    {
+      name: "Task Manager",
+      user: "aslin3",
+      pass: "aslin3",
+      role: "app3",
+      path: "/app3",
+      welcome: "Welcome to Task Manager",
+    },
+  ];
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isLoading) return;
@@ -18,27 +46,18 @@ export default function Login() {
 
     await new Promise((resolve) => setTimeout(resolve, 500));
 
-    if (username === "aslin" && password === "aslin") {
+    // Find the account that matches the input
+    const matchedAccount = appCreds.find(
+      (acc) => acc.user === username && acc.pass === password,
+    );
+
+    if (matchedAccount) {
       localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userRole", "admin");
+      localStorage.setItem("userRole", matchedAccount.role);
       toast.success("Access Granted", {
-        description: "Welcome to AK-ReactApp",
+        description: matchedAccount.welcome,
       });
-      navigate("/", { replace: true });
-    } else if (username === "aslin2" && password === "aslin2") {
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userRole", "tutorial");
-      toast.success("Access Granted", {
-        description: "Welcome to Tutorial",
-      });
-      navigate("/tutorial", { replace: true });
-    } else if (username === "aslin3" && password === "aslin3") {
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userRole", "app3");
-      toast.success("Access Granted", {
-        description: "Welcome to App3",
-      });
-      navigate("/app3", { replace: true });
+      navigate(matchedAccount.path, { replace: true });
     } else {
       toast.error("Access Denied", { description: "Incorrect credentials." });
       setIsLoading(false);
