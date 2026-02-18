@@ -8,6 +8,7 @@ interface ModalProps {
   onClose: () => void;
   confirmText?: string;
   isDestructive?: boolean;
+  children?: React.ReactNode;
 }
 
 export default function Modal({
@@ -18,6 +19,7 @@ export default function Modal({
   onClose,
   confirmText = "Confirm",
   isDestructive = false,
+  children,
 }: ModalProps) {
   if (!isOpen) return null;
 
@@ -35,6 +37,12 @@ export default function Modal({
             </button>
           </div>
           <p className="text-slate-500 text-sm leading-relaxed">{message}</p>
+
+          {children && (
+            <div className="mt-2 max-h-[200px] overflow-y-auto pr-2 custom-scrollbar animate-in slide-in-from-bottom-2 duration-300">
+              {children}
+            </div>
+          )}
         </div>
         <div className="flex gap-3 p-4 bg-slate-50 border-t border-slate-100">
           <button
