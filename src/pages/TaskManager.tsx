@@ -25,7 +25,7 @@ export default function TaskManager() {
       <div className="min-h-screen bg-[#F8FAFC] pb-20">
         {/* Sticky Header */}
         <nav className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-200 mb-8">
-          <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="max-w-[85%] mx-auto px-6 h-16 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="bg-slate-900 p-1.5 rounded-lg">
                 <LayoutDashboard size={20} className="text-white" />
@@ -60,7 +60,7 @@ export default function TaskManager() {
           </div>
         </nav>
 
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-[85%] mx-auto px-6">
           {/* Stats Bar */}
           <TaskStats />
 
