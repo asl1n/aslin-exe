@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { LogOut, LayoutDashboard } from "lucide-react";
+import { LogOut, LayoutDashboard, Gamepad2 } from "lucide-react";
 import { TaskProvider } from "../context/TaskContext";
 import TaskForm from "../components/TaskForm";
 import TaskList from "../components/TaskList";
@@ -36,13 +36,27 @@ export default function TaskManager() {
               </span>
             </div>
 
-            <button
-              onClick={() => setIsLogoutModalOpen(true)}
-              className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-red-600 transition-colors cursor-pointer px-3 py-2 rounded-xl hover:bg-red-50"
-            >
-              <LogOut size={18} />
-              Logout
-            </button>
+            <div className="flex items-center gap-2">
+              {/* Fun Zone Button */}
+              <a
+                href="https://asl1n.github.io/arrow-game/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors cursor-pointer px-3 py-2 rounded-xl hover:bg-blue-50"
+              >
+                <Gamepad2 size={18} />
+                Fun Zone
+              </a>
+
+              {/* Logout Button */}
+              <button
+                onClick={() => setIsLogoutModalOpen(true)}
+                className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-red-600 transition-colors cursor-pointer px-3 py-2 rounded-xl hover:bg-red-50"
+              >
+                <LogOut size={18} />
+                Logout
+              </button>
+            </div>
           </div>
         </nav>
 
