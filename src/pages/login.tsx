@@ -68,7 +68,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-200 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-200 p-4 relative">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-100 p-8">
         <div className="text-center mb-10">
           <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -143,6 +143,17 @@ export default function Login() {
         </form>
       </div>
 
+      <div className="absolute bottom-6 text-center text-sm text-slate-500 font-medium">
+        Developed by{" "}
+        <a
+          href="https://asl1n.github.io/Portfolio/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:text-blue-700 transition-all font-bold"
+        >
+          Aslin Karmacharya{" "}
+        </a>{" "}
+      </div>
       <Modal
         isOpen={isCredsModalOpen}
         onClose={() => setIsCredsModalOpen(false)}
