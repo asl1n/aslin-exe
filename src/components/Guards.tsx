@@ -2,17 +2,17 @@ import { Navigate, Outlet } from "react-router-dom";
 
 export const AuthGuard = ({ allowedRole }: { allowedRole: string }) => {
   const isAuthenticated = localStorage.getItem("isLoggedIn") === "true";
-  const userRole = localStorage.getItem("userRole");
+  const appView = localStorage.getItem("appView");
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
-  if (userRole !== allowedRole) {
+  if (appView !== allowedRole) {
     const homeMap: Record<string, string> = {
       admin: "/",
       tutorial: "/tutorial",
-      app3: "/app3",
+      task: "/task",
     };
-    return <Navigate to={homeMap[userRole || "admin"] || "/login"} replace />;
+    return <Navigate to={homeMap[appView || "admin"] || "/login"} replace />;
   }
 
   return <Outlet />;
@@ -20,12 +20,10 @@ export const AuthGuard = ({ allowedRole }: { allowedRole: string }) => {
 
 export const GuestGuard = () => {
   const isAuthenticated = localStorage.getItem("isLoggedIn") === "true";
-  const userRole = localStorage.getItem("userRole");
+  const appView = localStorage.getItem("appView");
 
   if (isAuthenticated) {
-    return (
-      <Navigate to={userRole === "tutorial" ? "/tutorial" : "/"} replace />
-    );
+    return <Navigate to={appView === "tutorial" ? "/tutorial" : "/"} replace />;
   }
   return <Outlet />;
 };

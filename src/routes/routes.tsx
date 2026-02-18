@@ -69,10 +69,10 @@ export const router = createHashRouter([
   },
   // App 3
   {
-    element: <AuthGuard allowedRole="app3" />,
+    element: <AuthGuard allowedRole="task" />,
     children: [
       {
-        path: "/app3",
+        path: "/task",
         element: (
           <Suspense fallback={<PageLoader />}>
             <TaskManager />

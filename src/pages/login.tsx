@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, KeyRound, Loader2 } from "lucide-react";
+import Modal from "../components/Modal";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -13,30 +14,32 @@ export default function Login() {
   // For Creds display and use
   const appCreds = [
     {
+      name: "Task Manager",
+      user: "task",
+      pass: "task",
+      app: "task",
+      path: "/task",
+      welcome: "Welcome to Task Manager",
+    },
+    {
       name: "Admin Panel",
-      user: "aslin",
-      pass: "aslin",
-      role: "admin",
+      user: "admin",
+      pass: "admin",
+      app: "admin",
       path: "/",
       welcome: "Welcome to AK-ReactApp",
     },
     {
       name: "Tutorial App (Coming Soon)",
-      user: "aslin2",
-      pass: "aslin2",
-      role: "tutorial",
+      user: "soon",
+      pass: "soon",
+      app: "tutorial",
       path: "/tutorial",
       welcome: "Welcome to Tutorial",
     },
-    {
-      name: "Task Manager",
-      user: "aslin3",
-      pass: "aslin3",
-      role: "app3",
-      path: "/app3",
-      welcome: "Welcome to Task Manager",
-    },
   ];
+
+  const [isCredsModalOpen, setIsCredsModalOpen] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,7 +56,7 @@ export default function Login() {
 
     if (matchedAccount) {
       localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userRole", matchedAccount.role);
+      localStorage.setItem("appView", matchedAccount.app);
       toast.success("Access Granted", {
         description: matchedAccount.welcome,
       });
@@ -115,6 +118,15 @@ export default function Login() {
           </div>
 
           <button
+            type="button"
+            onClick={() => setIsCredsModalOpen(true)}
+            className="w-full flex items-center justify-center gap-2 text-xs font-bold text-blue-600 bg-blue-50 py-2 rounded-xl hover:bg-blue-100 transition-all cursor-pointer border border-blue-100 mb-2"
+          >
+            <KeyRound size={14} />
+            View Demo Credentials
+          </button>
+
+          <button
             type="submit"
             disabled={isLoading}
             className="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 cursor-pointer flex items-center justify-center gap-2 transform active:scale-[0.98] transition-all shadow-lg mt-4 disabled:opacity-70 disabled:cursor-not-allowed"
@@ -130,6 +142,39 @@ export default function Login() {
           </button>
         </form>
       </div>
+
+      <Modal
+        isOpen={isCredsModalOpen}
+        onClose={() => setIsCredsModalOpen(false)}
+        onConfirm={() => setIsCredsModalOpen(false)}
+        title="App Credentials"
+        message="Use these Credentials to explore around:"
+        confirmText="Got it!"
+      >
+        <div className="mt-4 space-y-2">
+          {appCreds.map((acc) => (
+            <div
+              key={acc.app}
+              className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100"
+            >
+              <div className="text-left">
+                <p className="text-[10px] font-black uppercase text-slate-400 leading-none mb-1">
+                  {acc.name}
+                </p>
+                <p className="text-sm font-bold text-slate-800">{acc.user}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-[10px] font-black uppercase text-slate-400 leading-none mb-1">
+                  Password
+                </p>
+                <code className="text-sm font-mono font-bold text-blue-600">
+                  {acc.pass}
+                </code>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Modal>
     </div>
   );
 }

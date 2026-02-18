@@ -5,7 +5,7 @@ export default function Tutorial() {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("userRole");
+    localStorage.removeItem("appView");
     toast.success("Logout Successful!");
     navigate("/login", { replace: true });
   };
