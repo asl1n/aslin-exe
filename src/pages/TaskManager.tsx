@@ -1,6 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { LogOut, LayoutDashboard, Gamepad2 } from "lucide-react";
+import {
+  LogOut,
+  LayoutDashboard,
+  Gamepad2,
+  MoreVertical,
+  X,
+  Menu,
+} from "lucide-react";
 import { TaskProvider } from "../context/TaskContext";
 import TaskForm from "../components/TaskForm";
 import TaskList from "../components/TaskList";
@@ -12,6 +19,7 @@ export default function TaskManager() {
   const navigate = useNavigate();
 
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
@@ -36,7 +44,7 @@ export default function TaskManager() {
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="md:flex hidden items-center gap-2">
               {/* Fun Zone Button */}
               <a
                 href="https://asl1n.github.io/arrow-game/"
@@ -57,8 +65,41 @@ export default function TaskManager() {
                 Logout
               </button>
             </div>
+
+            {/* Mobile Menu Toggle */}
+            <div className="md:hidden flex items-center">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="p-2 text-slate-600 border border-slate-200 rounded-lg bg-white shadow-sm hover:bg-slate-50 active:scale-95 transition-all"
+                aria-label="Toggle menu"
+              >
+                {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+            </div>
           </div>
         </nav>
+
+        {isMenuOpen && (
+          <div className="absolute top-14 right-12 w-48 bg-white border border-slate-200 rounded-2xl shadow-xl py-2 z-50 md:hidden animate-in fade-in zoom-in duration-200">
+            <a
+              href="https://asl1n.github.io/arrow-game/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-600 hover:bg-blue-50 hover:text-blue-600"
+            >
+              <Gamepad2 size={18} /> Fun Zone
+            </a>
+            <button
+              onClick={() => {
+                setIsMenuOpen(false);
+                setIsLogoutModalOpen(true);
+              }}
+              className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-600 hover:bg-red-50 hover:text-red-600"
+            >
+              <LogOut size={18} /> Logout
+            </button>
+          </div>
+        )}
 
         <div className="max-w-[85%] mx-auto px-6">
           {/* Stats Bar */}
