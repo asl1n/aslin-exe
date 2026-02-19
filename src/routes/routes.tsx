@@ -4,7 +4,7 @@ import App from "../App";
 import { AuthGuard, GuestGuard } from "../components/Guards";
 
 const Login = lazy(() => import("../pages/login"));
-const Register = lazy(() => import("../components/LearnForm"));
+const Register = lazy(() => import("../components/Register"));
 const Dashboard = lazy(() => import("../pages/Dashboard"));
 const Users = lazy(() => import("../pages/Users"));
 const TutorialApp = lazy(() => import("../pages/Tutorial"));
