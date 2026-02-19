@@ -4,6 +4,7 @@ import App from "../App";
 import { AuthGuard, GuestGuard } from "../components/Guards";
 
 const Login = lazy(() => import("../pages/login"));
+const Register = lazy(() => import("../components/LearnForm"));
 const Dashboard = lazy(() => import("../pages/Dashboard"));
 const Users = lazy(() => import("../pages/Users"));
 const TutorialApp = lazy(() => import("../pages/Tutorial"));
@@ -20,6 +21,10 @@ export const router = createHashRouter([
   {
     element: <GuestGuard />,
     children: [{ path: "/login", element: <Login /> }],
+  },
+  {
+    element: <GuestGuard />,
+    children: [{ path: "/register", element: <Register /> }],
   },
   // admin
   {
