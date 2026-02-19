@@ -1,6 +1,7 @@
 import { useState, type ReactElement } from "react";
 import { Eye, EyeOff, Loader2, UserPlus } from "lucide-react";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 function Register(): ReactElement {
   // Form Declare
@@ -178,6 +179,15 @@ function Register(): ReactElement {
             )}
           </div>
 
+          <p className="text-center text-sm text-slate-500 mt-6">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-blue-600 hover:text-blue-700 font-bold transition-all"
+            >
+              Sign In
+            </Link>
+          </p>
           <button
             type="submit"
             disabled={isLoading}

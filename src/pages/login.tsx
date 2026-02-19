@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Eye, EyeOff, KeyRound, Loader2 } from "lucide-react";
 import Modal from "../components/Modal";
@@ -126,6 +126,15 @@ export default function Login() {
             View Demo Credentials
           </button>
 
+          <p className="text-center text-sm text-slate-500 mt-6">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="text-blue-600 hover:text-blue-700 font-bold transition-all"
+            >
+              Sign Up
+            </Link>
+          </p>
           <button
             type="submit"
             disabled={isLoading}
