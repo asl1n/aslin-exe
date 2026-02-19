@@ -12,32 +12,44 @@ function Learn(): ReactElement {
   // To set errors
   const [errors, setErrors] = useState<any>({});
 
-  // validation
-  const validate = () => {
-    let newErrors: any = {};
+  // Validation
+  const validate = (name: string, value: string) => {
+    let error = "";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!formData.username) newErrors.username = "Username is required";
-    if (!emailRegex.test(formData.email)) newErrors.email = "Invalid email";
-    if (formData.password.length < 6) newErrors.password = "Password too short";
+    if (name === "username" && !value) error = "Username is required";
+    if (name === "email" && !emailRegex.test(value)) error = "Invalid email";
+    if (name === "password" && value.length < 6) error = "Password too short";
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    setErrors((prev: any) => ({ ...prev, [name]: error }));
   };
 
   // Binding with html
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+
+    // Real time error push
+    if (errors[name]) {
+      validate(name, value);
+    }
   };
 
-  // Submit logic
+  // when user is moving to next field
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    validate(name, value);
+  };
+
+  // Submit Logic
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) {
-      console.log("Payload ready:", formData);
-      alert("Success!");
-    }
+    // Validate before submit
+    Object.keys(formData).forEach((key) =>
+      validate(key, (formData as any)[key]),
+    );
+
+    alert("Check console for status!");
   };
 
   return (
@@ -47,6 +59,7 @@ function Learn(): ReactElement {
           name="username" // MUST match the key in state
           value={formData.username} // Bind state to value
           onChange={handleChange} // Bind change to state update
+          onBlur={handleBlur} // To show error on Blur
           placeholder="Username"
           className={`border p-2 w-full ${errors.username ? "border-red-500" : ""}`}
         />
@@ -60,6 +73,7 @@ function Learn(): ReactElement {
           name="email"
           value={formData.email}
           onChange={handleChange}
+          onBlur={handleBlur}
           placeholder="Email"
           className={`border p-2 w-full ${errors.email ? "border-red-500" : ""}`}
         />
@@ -69,12 +83,16 @@ function Learn(): ReactElement {
       <div>
         <input
           name="password"
+          type="password"
           value={formData.password}
           onChange={handleChange}
+          onBlur={handleBlur}
           placeholder="Enter Password"
-          className={`border p-2 w-full ${errors.email ? "border-red-500" : ""}`}
+          className={`border p-2 w-full ${errors.password ? "border-red-500" : ""}`}
         />
-        {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
+        {errors.password && (
+          <p className="text-red-500 text-xs">{errors.password}</p>
+        )}
       </div>
 
       <button type="submit" className="bg-slate-900 text-white p-2 rounded">
