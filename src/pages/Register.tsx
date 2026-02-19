@@ -1,9 +1,10 @@
 import { useState, type ReactElement } from "react";
 import { Eye, EyeOff, Loader2, UserPlus } from "lucide-react";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register(): ReactElement {
+  const navigate = useNavigate();
   // Form Declare
   const [formData, setFormData] = useState({
     username: "",
@@ -76,9 +77,51 @@ function Register(): ReactElement {
 
     // Simulate API Call
     setTimeout(() => {
+      // Get existing users from LocalStorage
+      const existingUsers = JSON.parse(
+        localStorage.getItem("AK_users") || "[]",
+      );
+
+      // Check if username OR email already exists
+      const userExists = existingUsers.some(
+        (u: any) =>
+          u.email === formData.email || u.username === formData.username,
+      );
+
+      if (userExists) {
+        setIsLoading(false);
+
+        const isEmailTaken = existingUsers.some(
+          (u: any) => u.email === formData.email,
+        );
+        toast.error(
+          isEmailTaken
+            ? "Email already registered!"
+            : "Username already taken!",
+        );
+        return;
+      }
+
+      // Payload
+      const newUser = {
+        ...formData,
+        id: crypto.randomUUID(),
+        role: "User",
+        status: "Active",
+        createdAt: new Date().toLocaleString(),
+        modifiedAt: null,
+      };
+
+      localStorage.setItem(
+        "AK_users",
+        JSON.stringify([...existingUsers, newUser]),
+      );
+
       setIsLoading(false);
-      toast.success("Account created! Check console for payload");
-      console.log("Register Payload:", formData);
+      toast.success("Account Created Successfully!");
+      console.log("Register Payload:", newUser);
+
+      navigate("/login");
     }, 1500);
   };
 
