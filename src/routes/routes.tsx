@@ -9,6 +9,7 @@ const Dashboard = lazy(() => import("../pages/Dashboard"));
 const Users = lazy(() => import("../pages/Users"));
 const TutorialApp = lazy(() => import("../pages/Tutorial"));
 const TaskManager = lazy(() => import("../pages/TaskManager"));
+const Study = lazy(() => import("../study/Study"));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center h-64">
@@ -85,5 +86,14 @@ export const router = createHashRouter([
         ),
       },
     ],
+  },
+  // To practice
+  {
+    path: "/study",
+    element: (
+      <Suspense fallback={<PageLoader />}>
+        <Study />
+      </Suspense>
+    ),
   },
 ]);
